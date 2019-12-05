@@ -1,0 +1,17 @@
+#phys {
+    display: block;
+    margin: auto;
+    width: 100%;
+
+}
+
+#div {
+    max-height: 705px;
+    overflow: hidden;
+    position: absolute;
+    opacity: 50%;
+}
+
+#navtop {
+    font-family: 'Permanent Marker', cursive;
+}
