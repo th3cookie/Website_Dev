@@ -1,0 +1,41 @@
+/* Element */
+li {
+    border: 2px solid red;
+}
+
+/* ID */
+#spec {
+    color: rosybrown;
+    background: yellow;
+}
+
+/* Class */
+.first {
+    color: yellowgreen;
+    text-decoration: line-through;
+}
+
+/* Star Selector (Every Element */
+* {
+    border: 1px solid lightblue;
+}
+
+/* Descendant Selector */
+ul li {
+    color: blueviolet;
+}
+
+/* Adjacent Selector (same level just after) */
+h4 + ul {
+    border: 4px solid blue;
+}
+
+/* Attribute Selector */
+a[href="http://www.google.com"] {
+    background: green;
+}
+
+/* nth of type (e.g. 5th of the type) */
+li:nth-of-type(even) {
+    background: greenyellow;
+}
