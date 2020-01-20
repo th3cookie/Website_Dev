@@ -13,27 +13,34 @@
     <!-- To get Live Server Working:
     http://localhost/~sami/Website_Dev/
     http://127.0.0.1:5500/
+
+    Go to -> http://localhost/~sami/Website_Dev/Study/wdb_videos/
     -->
-    <pre>
-    <?php
-    $path    = './videos';
-    $folders = array_diff(scandir($path), array('.', '..'));
-    print_r($folders);
-    ?>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Chapter</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-            <option value=""></option>
+        <label for="chapter">Chapter</label>
+        <select class="form-control" id="chapter">
+        <?php
+        // $path    = './videos';
+        // $folders = array_diff(scandir($path), array('.', '..'));
+        // print_r($folders);
+        $path    = './videos';
+        $folders = array_diff(scandir($path), array('.', '..'));
+        foreach($folders as $folder) {
+            echo "<option value='" . $folder . "'>" . $folder . "</option>";
+        }
+        ?>
         </select>
+        <label for="content">Content</label>
+        <select name="content" id="content">Content</select>
+
+        <!-- <?php
+        foreach(glob('./videos/' . $folder . '/*') as $filename){
+            $filename = basename($filename);
+            echo $filename;
+            echo "<br>";
+        }
+        ?> -->
     </div>
-    <?php
-    foreach ($folders as $value) {
-        $files = array_diff(scandir("./videos/$value/"), array('.', '..'));
-        print_r($files);
-        echo "<br>";
-    }
-    ?>
-    </pre>
 <!-- 
     <video src="videos/1. Introduction to this Course/4. Why This Course.mp4" controls></video>
 
@@ -57,9 +64,28 @@
         function fasterPlaySpeed() { 
             vid.playbackRate = 2;
         }
-        
-        // document.querySelector('video').playbackRate = 2.0;
-        // document.querySelector('video').play();
+
+        var fs = require('fs');
+        var chapter = document.getElementById("chapter");
+        chapter.onchange = readFiles;
+
+        function readFiles(chapter, onFileContent, onError) {
+        fs.readdir(dirname, function(err, filenames) {
+            if (err) {
+            onError(err);
+            return;
+            }
+            filenames.forEach(function(filename) {
+            fs.readFile(dirname + filename, 'utf-8', function(err, content) {
+                if (err) {
+                onError(err);
+                return;
+                }
+                onFileContent(filename, content);
+            });
+            });
+        });
+        }
 
     </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
