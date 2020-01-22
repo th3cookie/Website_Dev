@@ -76,6 +76,9 @@
                 data: {"vid": vid},
                 success: function(response) {
                     $("#vid").html(response);
+                    // YOU NEED TO RETURN THE RESPONSE IN JSON USING JSON_ENCODE (IN THE PHP SCRIPT)
+                    // AND THEN PERFORM THE LOGIC IN JS TO UPDATE CONTENTS OF ID=vid html element in the DOM.
+                    // OTHERWISE FS CONTENTS CHANGE AND THE PAGE IS REFRESHED (apache?).
                 }
             })
             getVid();
