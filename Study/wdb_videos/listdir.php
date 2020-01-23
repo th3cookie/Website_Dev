@@ -1,12 +1,20 @@
 <?php
-if (isset($_GET["dir"])) {
-    $dir = $_GET["dir"];
-    $files = scandir($dir);
+if(isset($_GET["chapter"])) {
+    $chapter = $_GET["chapter"];
+    if(isset($_GET["episode"])) {
+        $episode = $_GET["episode"];
+    }
+    $dir = "./videos/" . $chapter;
+    $files = array_diff(scandir($dir), array('.', '..'));
     natsort($files);
     foreach ($files as $file) {
         if ( is_file($dir . '/' . $file) ) {
             if(strtolower(end(explode(".",$file))) =="mp4")
-                echo "<option value=\"$file\">$file</option>";
+            if ($episode == $file) {
+                echo "<option selected='selected' name='episode' value=\"$file\">$file</option>";
+            } else {
+                echo "<option name='episode' value=\"$file\">$file</option>";
+            }
         }
     }
 }

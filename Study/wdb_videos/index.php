@@ -23,42 +23,58 @@
 
     Go to -> http://localhost/~sami/Website_Dev/Study/wdb_videos/
     -->
+    <?php
+    $filecontents = file_get_contents('upto.txt');
+    if(isset($_GET["chapter"], $_GET["episode"])) {
+        $chapter = $_GET["chapter"];
+        $episode = $_GET["episode"];
+        $vid = "./videos/" . $chapter . "/" . $episode;
+        file_put_contents("upto.txt", $vid);
+    } elseif ($filecontents !== false ) {
+        $fileArray = explode("/", $filecontents);
+        $chapter = $fileArray[2];
+        $episode = $fileArray[3];
+        $vid = "./videos/" . $chapter . "/" . $episode;
+    }
+    ?>
     <h1 align="center" class="jumbotron text-center py-0" >Web Developer Bootcamp</h1>
-    <div class="form-row mb-4" style="margin: auto">
+    <form class="form-row mb-4" style="margin: auto" method="get">
         <div class="col-4 px-2">
             <label for="chapter" class="col-sm-2 col-form-label">Chapter</label>
-            <select class="form-control" id="chapter">
+            <select class="form-control" name='chapter' id="chapter">
             <?php
             $path    = './videos';
             $folders = array_diff(scandir($path), array('.', '..'));
             natsort($folders);
             foreach($folders as $folder) {
-                echo "<option value='" . $folder . "'>" . $folder . "</option>";
+                if ($folder == $chapter) {
+                    echo "<option selected='selected' name='chapter' value='" . $folder . "'>" . $folder . "</option>";
+                } else {
+                    echo "<option name='chapter' value='" . $folder . "'>" . $folder . "</option>";
+                }
             }
             ?>
             </select>
         </div>
         <div class="col-4 px-2">
-            <label class="col-sm-2 col-form-label" for="content">Content</label>
-            <select class="form-control" name="content" id="content">
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $("#chapter").change(function() {
-                        var dir = "./videos/" + $(this).val();
-                        $.get("listdir.php", {"dir": dir}, function(response){
-                            $("#content").html(response);
-                        });
-                    });
-                })
-            </script>
+            <label class="col-sm-2 col-form-label" for="content">Episode</label>
+            <select class="form-control" name="episode" id="episode">
+            <?php
+            if($episode) {
+                echo "<option name='episode' value=\"$episode\">$episode</option>";
+            }
+            ?>
             </select>
         </div>
         <div class="col-3 px-2 btn-group-vertical">
-            <button onclick="loadVid()" class="btn btn-primary btn-lg btn-block">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
         </div>
-    </div>
+    </form>
     <div class="d-flex">
-        <div id="vid"></div>
+        <div>
+            <video id="video" controls src="<?php echo $vid; ?>"></video>
+            <p id="test"></p>
+        </div>
         <div class="d-inline-flex p-3 text-white">
             <button type="button" class="btn btn-warning" onclick="slowPlaySpeed()">0.5x Speed</button>
             <button type="button" class="btn btn-success" onclick="normalPlaySpeed()">1x Speed</button>
@@ -68,23 +84,31 @@
     </div>
     <!-- Optional JavaScript -->
     <script>
-        function loadVid() {
-            var vid = "./videos/" + $("#chapter").val() + "/" + $("#content").val();
-            $.ajax({
-                url: "listvid.php",
-                method: "GET",
-                data: {"vid": vid},
-                success: function(response) {
-                    $("#vid").html(response);
-                    // YOU NEED TO RETURN THE RESPONSE IN JSON USING JSON_ENCODE (IN THE PHP SCRIPT)
-                    // AND THEN PERFORM THE LOGIC IN JS TO UPDATE CONTENTS OF ID=vid html element in the DOM.
-                    // OTHERWISE FS CONTENTS CHANGE AND THE PAGE IS REFRESHED (apache?).
+        $(document).ready(function() {
+            var chapter = $('#chapter').val();
+            var episode = $('#episode').val();
+            if (chapter) {
+                if (episode) {
+                    grabEpisodes();
+                } else {
+                    $.get("listdir.php", {"chapter": chapter}, function(response){
+                    $("#episode").html(response);
+                    });
                 }
-            })
-            getVid();
-        }
-        function getVid() {
+            }
+        });
+        $("#chapter").change(function() {
+            grabEpisodes();
+        });
+        $(function() {
             var video = document.querySelector("video");
+        });
+        function grabEpisodes() {
+            var chapter = $('#chapter').val();
+            var episode = $('#episode').val();
+            $.get("listdir.php", {"chapter": chapter, "episode": episode}, function(response){
+                $("#episode").html(response);
+            });
         }
         function slowPlaySpeed() {
             video.playbackRate = 0.5;
