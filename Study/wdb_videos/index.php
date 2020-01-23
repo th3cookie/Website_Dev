@@ -112,6 +112,8 @@
             });
         }
         $("#fieldNext").click(function() {
+            // ACTUALLY, DO THIS WITH THE 'CURRENT' ELEMENT SELECTOR, LIKE:
+            //  $('#chapter').val().prev() - Google it;
             $('#episode option:selected').next().attr('selected', 'selected');
         });
         $("#fieldPrev").click(function() {
