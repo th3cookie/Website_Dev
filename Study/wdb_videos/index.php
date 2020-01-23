@@ -73,13 +73,14 @@
     <div class="d-flex">
         <div>
             <video id="video" controls src="<?php echo $vid; ?>"></video>
-            <p id="test"></p>
         </div>
         <div class="d-inline-flex p-3 text-white">
+            <button type="button" class="btn btn-outline-dark" id='fieldPrev'>Prev</button>
             <button type="button" class="btn btn-warning" onclick="slowPlaySpeed()">0.5x Speed</button>
             <button type="button" class="btn btn-success" onclick="normalPlaySpeed()">1x Speed</button>
             <button type="button" class="btn btn-primary" onclick="fastPlaySpeed()">1.5x Speed</button>
             <button type="button" class="btn btn-danger" onclick="fasterPlaySpeed()">2x Speed</button>
+            <button type="button" class="btn btn-outline-dark" id='fieldNext'>Next</button>
         </div>
     </div>
     <!-- Optional JavaScript -->
@@ -110,6 +111,12 @@
                 $("#episode").html(response);
             });
         }
+        $("#fieldNext").click(function() {
+            $('#episode option:selected').next().attr('selected', 'selected');
+        });
+        $("#fieldPrev").click(function() {
+            $('#episode option:selected').prev().attr('selected', 'selected');
+        });
         function slowPlaySpeed() {
             video.playbackRate = 0.5;
         }
