@@ -1,1 +1,1 @@
-./videos/16. Advanced DOM Manipulation/1. Introduction to Events.mp4
+./videos/6. Intermediate CSS/3. More Text and Fonts.mp4

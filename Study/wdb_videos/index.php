@@ -72,7 +72,7 @@
     </form>
     <div class="d-flex">
         <div>
-            <video id="video" controls src="<?php echo $vid; ?>"></video>
+            <video autoplay id="video" controls src="<?php echo $vid; ?>"></video>
         </div>
         <div class="d-inline-flex p-3 text-white">
             <button type="button" class="btn btn-outline-dark" id='fieldPrev'>Prev</button>
@@ -103,6 +103,11 @@
         });
         $(function() {
             var video = document.querySelector("video");
+            fastPlaySpeed();
+            video.addEventListener('ended',myHandler,false);
+            function myHandler() {
+                $('#fieldNext').click();
+            }
         });
         function grabEpisodes() {
             var chapter = $('#chapter').val();
@@ -112,10 +117,6 @@
             });
         }
         $("#fieldNext").click(function() {
-            // ACTUALLY, DO THIS WITH THE 'CURRENT' ELEMENT SELECTOR, LIKE:
-            //  $('#chapter').val().prev() - Google it;
-            // var e = document.getElementById('episode');
-            // f = e.options[e.selectedIndex].value;
             $('#episode option:selected').next().attr('selected', 'selected');
             $("#theform").submit();
         });
