@@ -59,11 +59,13 @@
         <div class="col-4 px-2">
             <label class="col-sm-2 col-form-label" for="content">Episode</label>
             <select class="form-control" name="episode" id="episode">
-            <?php
-            if($episode) {
-                echo "<option name='episode' value=\"$episode\">$episode</option>";
-            }
-            ?>
+                <option value="AAA">AAA</option>
+                <option value="BBB">BBB</option>
+                <option value="CCC">CCC</option>
+                <option value="DDD">DDD</option>
+                <option value="EEE">EEE</option>
+                <option value="FFF">FFF</option>
+                <option value="GGG">GGG</option>
             </select>
         </div>
         <div class="col-3 px-2 btn-group-vertical">
@@ -114,14 +116,13 @@
         $("#fieldNext").click(function() {
             // ACTUALLY, DO THIS WITH THE 'CURRENT' ELEMENT SELECTOR, LIKE:
             //  $('#chapter').val().prev() - Google it;
-            // var e = document.getElementById('episode');
-            // f = e.options[e.selectedIndex].value;
+            var e = document.getElementById('episode');
+            alert(e.options[e.selectedIndex].value);
             $('#episode option:selected').next().attr('selected', 'selected');
             $("#theform").submit();
         });
         $("#fieldPrev").click(function() {
             $('#episode option:selected').prev().attr('selected', 'selected');
-            $("#theform").submit();
         });
         function slowPlaySpeed() {
             video.playbackRate = 0.5;
