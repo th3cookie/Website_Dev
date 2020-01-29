@@ -18,10 +18,17 @@
 </head>
 <body>
     <!-- To get Live Server Working:
+    Linux:
     http://localhost/~sami/Website_Dev/
-    http://127.0.0.1:5500/
+    http://localhost:5500/
 
     Go to -> http://localhost/~sami/Website_Dev/Study/wdb_videos/
+
+    Windows:
+    http://localhost/git/Website_Dev/
+    http://localhost:5500/
+
+    Go to -> http://localhost/git/Website_Dev/Study/wdb_videos/
     -->
     <?php
     $filecontents = file_get_contents('upto.txt');
